@@ -3,6 +3,7 @@ const axios = require('axios');
 const constants = require('../constants');
 const bot = require('./bot');
 const { getFormattedTime, getStartOfDayTimestamp, shortenAddress, financial } = require('../utils');
+const { io } = require('..');
 
 const tronWeb = new TronWeb({
   fullHost: 'https://api.trongrid.io',
@@ -32,6 +33,7 @@ function startEventListener() {
           ) {
             const message = `<b>USDT/TRC20 Transaction</b> \n\n <i>Transaction:</i>  <a href="https://tronscan.org/#/transaction/${event.transaction}">${shortenAddress(event.transaction, 6)}</a> \n <i>From:</i>  <a href="https://tronscan.org/#/address/${from}">${shortenAddress(from)}</a> \n <i>To:</i>  <a href="https://tronscan.org/#/address/${to}">${shortenAddress(to)}</a> \n <i>Amount:</i>  <b>${Number(event.result.value) / constants.DECIMALS} USDT</b> \n <i>Time:</i>  <code>${getFormattedTime(event.timestamp)}</code>`;
             bot.sendMessage(constants.CHAT_ID, message, {parse_mode : "HTML"});
+            io.emit("newTransaction");
           }
         }
       });

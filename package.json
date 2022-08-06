@@ -27,6 +27,7 @@
     "nodemon": "^2.0.19",
     "prettier": "^2.7.1",
     "rimraf": "^3.0.2",
+    "socket.io": "^4.5.1",
     "tronweb": "^4.2.0",
     "uuidv4": "^6.2.13",
     "winston": "^3.8.1"
